@@ -51,7 +51,7 @@ public class TrangThaiDonHangServices implements  ITrangThaiDonHangServices{
 
     @Override
     @Transactional
-    public void createTrangThaiDonHang(TrangThaiDonHangCreateForm form) throws NotEnoughInventory{
+    public void createTrangThaiDonHang(TrangThaiDonHangCreateForm form) throws NotEnoughInventory {
         TrangThaiDonHang trangThaiDonHang = modelMapper.map(form, TrangThaiDonHang.class);
         TrangThaiDonHang.TrangThaiDonHangPK pk = new TrangThaiDonHang.TrangThaiDonHangPK();
 
@@ -60,52 +60,40 @@ public class TrangThaiDonHangServices implements  ITrangThaiDonHangServices{
         trangThaiDonHang.setId(pk);
         trangThaiDonHang.setNgayCapNhat(LocalDateTime.now());
 
-
-        /**
-         *  Có 2 tình huống có thể xảy ra
-         *  1. Khởi tạo trạng thái lần đầu
-         *      + Kiếm thử xem đơn hàng này đã có trạng thái gì trước đó chưa ?
-         *      + Nếu chưa thì khởi tạo và bỏ qua phần kiểm trạng thái bên dưới và khởi tạo trạng thái mới.
-         *      + Nếu đã có thì tới trường hợp thứ 2.
-         *
-         *  2. Chuyển trạng thái.
-         *      + Nếu đơn hàng từ ChoDuyet thành DaDuyet -> Giảm số lượng toàn bộ Sản Phẩm có trong đơn hàng
-         *      + Nếu đơn hàng từ ChoDuyet thành Huy -> Không làm gì cả
-         *      + Nếu đơn hàng từ DaDuyet thành Huy -> Check để refund lại số lượng đã mua
-         */
-
-        //Kiểm tra xem đã tồn tai trạng thái đơn hàng cu chưa ?
+        // Kiểm tra xem đã tồn tại trạng thái đơn hàng cũ chưa
         TrangThaiDonHang trangThaiDonHangCu = trangThaiDonHangMoiNhat(form.getMaDH());
-        if ( trangThaiDonHangCu != null) {
-            //Duyệt sẽ giảm số lượng
-            if (form.getTrangThai().equals(TrangThai.DaDuyet)) {
+
+        if (trangThaiDonHangCu != null) {
+            // Nếu trạng thái mới là "Hủy", bỏ qua kiểm tra số lượng và chỉ set trạng thái
+            if (form.getTrangThai().equals(TrangThai.Huy)) {
+                // Kiểm tra nếu trạng thái trước đó là "Đã Duyệt" thì hoàn lại số lượng
+                if (trangThaiDonHangCu.getId().getTrangThai().equals(TrangThai.DaDuyet)) {
+                    List<CTDH> chiTietDonHang = ictdhServices.getAllCTDHByMaDH(form.getMaDH(), null).getContent();
+                    for (CTDH ctdh : chiTietDonHang) {
+                        SanPham sanPham = sanPhamServices.getSanPhamById(ctdh.getSanPham().getMaSP());
+                        sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() + ctdh.getSoLuong());
+                    }
+                }
+            }
+            // Trạng thái là "Đã Duyệt" thì giảm số lượng sản phẩm
+            else if (form.getTrangThai().equals(TrangThai.DaDuyet)) {
                 List<CTDH> chiTietDonHang = ictdhServices.getAllCTDHByMaDH(form.getMaDH(), null).getContent();
                 for (CTDH ctdh : chiTietDonHang) {
                     SanPham sanPham = sanPhamServices.getSanPhamById(ctdh.getSanPham().getMaSP());
 
-                    if (sanPham.getSoLuongConLai() - ctdh.getSoLuong() >= 0){
+                    if (sanPham.getSoLuongConLai() - ctdh.getSoLuong() >= 0) {
                         sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() - ctdh.getSoLuong());
-                    }else{
+                    } else {
                         String message = "Không đủ số lượng " + sanPham.getTenSP();
                         throw new NotEnoughInventory(message);
                     }
-
-                }
-            }
-
-            //Refund lại số lượng khi hủy 1 đơn hàng đã được duyệt
-            else if (form.getTrangThai().equals(TrangThai.Huy) && trangThaiDonHangCu.getId().getTrangThai().equals(TrangThai.DaDuyet)) {
-                List<CTDH> chiTietDonHang = ictdhServices.getAllCTDHByMaDH(form.getMaDH(), null).getContent();
-                for (CTDH ctdh : chiTietDonHang) {
-                    SanPham sanPham = sanPhamServices.getSanPhamById(ctdh.getSanPham().getMaSP());
-                    sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() + ctdh.getSoLuong());
                 }
             }
         }
 
-
         repository.save(trangThaiDonHang);
     }
+
 
 
 }

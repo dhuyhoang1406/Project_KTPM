@@ -19,7 +19,7 @@ const Payment = () => {
   const location = useLocation(); 
 
 
-  console.log(location);
+  console.log(order?.orderItemsSelected);
 
   const priceMemo = useMemo(() => {
     const result = order?.orderItemsSelected?.reduce((total, cur) => {
@@ -49,15 +49,18 @@ const Payment = () => {
     const data = {tongGiaTri, phuongThucThanhToan:payment, phuongThucVanChuyen:delivery , maKhachHang, diaChiGiaoHang: location.state.diaChi, danhSachCTDH} 
     const account = {Username, Password}
     console.log(data)
+    console.log(order?.orderItemsSelected);
     try {
       console.log(account)
       const res = await OrderService.createOrder(data,account)
       console.log(res)
       message.success('Đặt hàng thành công')
       const arrayOrdered = []
-      order?.orderItemsSlected?.forEach(element => {
+      order?.orderItemsSelected?.forEach(element => {
+        console.log(element)
         arrayOrdered.push(element.product)
       });
+      console.log(order?.orderItemsSelected)
       dispatch(removeAllOrderProduct({listChecked: arrayOrdered}))
       navigate('/')
     } catch (error) {

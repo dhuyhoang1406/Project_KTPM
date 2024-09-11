@@ -39,7 +39,8 @@ const Table = ({isCEO,heads,bodys,setFlag})=>{
                                         <>
                                             <button className={styles.delete} onClick={async()=>{
                                                 if(window.confirm('Xác nhận hủy đơn hàng ?')){
-                                                    await updateOrder("Huy",body.maDH)
+                                                    const res = await updateOrder("Huy",body.maDH)
+                                                    console.log(res)
                                                     setFlag()
                                                 }
                                                 }}>Hủy</button>
