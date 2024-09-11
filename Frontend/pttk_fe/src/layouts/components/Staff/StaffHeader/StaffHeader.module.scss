@@ -1,0 +1,23 @@
+.wrapper {
+    z-index:9;
+    background-color: rgba(50, 49, 49);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+.title {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffffff;
+
+}
+.signOut{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}

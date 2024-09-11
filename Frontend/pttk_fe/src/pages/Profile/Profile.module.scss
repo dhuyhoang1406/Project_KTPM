@@ -1,0 +1,46 @@
+.profileUser {
+    display: flex;
+    margin-top: 6.5rem;
+    .sidebarUser {
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        overflow-y: scroll;
+        flex: 1;
+        margin-top: -3rem;
+        .listSidebar {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            row-gap: 2rem;
+            padding: 10rem 5rem 5rem 5rem;
+            .sidebarItem {
+                border-radius: 2rem;
+                text-align: center;
+                padding: 2rem;
+                background-color: rgba(0,0,0,0.1);
+                cursor: pointer;
+                user-select: none;
+            }
+        }
+    }
+
+    .contentSidebar {
+        flex: 3;
+        padding-top: 2rem;
+        display: flex;
+        justify-content: center;
+        .wrapper {
+
+            .inputUpdateUser{
+                padding: 1rem;
+                font-size: 2rem;
+                width: 70rem;
+            }
+        }
+    }
+}
+
+.sidebarUser::-webkit-scrollbar {
+    display: none;
+}

@@ -1,0 +1,35 @@
+.wrapper{
+    position: relative;
+}
+.selectWrapper {
+   position: relative;
+   padding-right: 1rem;
+}
+.collapse {
+    position: absolute;
+    max-height: 20rem;
+    overflow-y: scroll;
+    background-color: white;
+}
+.input{
+    font-size: 1.3rem;
+    font-weight: 700;
+    height: 3rem;
+    padding-left: 1rem;
+    border: 1px solid rgb(156, 155, 155);
+    width: 30rem;
+    border-radius: 2px;
+}
+.icon {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+}
+.input:focus{
+    border: 1px solid black;
+}
+.item:hover{
+    cursor: pointer;
+    background-color: rgb(194, 192, 192);
+}

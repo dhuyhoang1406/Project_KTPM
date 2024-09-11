@@ -1,0 +1,28 @@
+.overlayMenuItem {
+  margin-top: 3rem;
+  padding: 0 5rem;
+  .overlayMenuLink {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    .textTypeMenu {
+      font-size: 2rem;
+    }
+    .iconRight {
+      display: none;
+    }
+  }
+}
+.overlayMenuItem:first-child {
+  margin-top: 0;
+}
+.overlayMenuLink:hover .iconRight {
+  display: block;
+}
+.overlayMenuLink:hover {
+  border-bottom: 1px solid #999;
+}
+.overlayMenuItem:last-child {
+  color: red;
+}

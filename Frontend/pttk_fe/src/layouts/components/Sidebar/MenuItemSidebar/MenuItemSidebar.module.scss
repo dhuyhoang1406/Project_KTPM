@@ -1,0 +1,22 @@
+.menuItem {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    &.active {
+        background-color: #333;
+        color: #fff;
+    }
+}
+
+.title {
+    margin-left: 10px;
+}
+
+.icon {
+    display: flex;
+}

@@ -1,0 +1,153 @@
+.wrapperDetail {
+    width: 100vw;
+    padding: 7.5rem 10rem 6rem 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .nav{
+        font-Weight: 'bold';
+        cursor: pointer;
+        &:hover {
+            color: rgba(221, 165, 25, 0.752);
+        }
+    }
+    .content {
+        margin-top: 2rem;
+        width: 100%;
+        display: flex;
+        height: 60rem;
+        // border: 1px solid rgba(0,0,0,0.4);
+        border-radius: 10px;
+        // box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+        .imgProduct {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+            img {
+                height: 100%;
+            }
+        }
+        .detailProduct {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 10px;
+            padding: 2rem 5rem;
+            // border-left: 1px solid rgba(0,0,0,0.4);
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+            flex: 2;
+            row-gap: 1.5rem;
+            .textProduct{
+                font-size: 2.5rem;
+                font-weight: normal;
+                font-family: "ElenaWeb", 'Playfair Display', "Lato";
+            }
+            .separate {
+                width: 3rem;
+                height: 5px;
+                background-color: #333;
+            }
+            .productParameters {
+                display: flex;
+                color: #fff;
+                gap: 2rem;
+                .Capacity{
+                display: flex;
+                column-gap: 4rem;
+                padding: 1rem;
+                width: 20rem;
+                height: 7rem;
+                background-color: #5A717C;
+                .textCapacity {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    margin-top: -5px;
+                }
+                }
+                .Alcohol {
+                display: flex;
+                padding: 1rem;
+                column-gap: 4rem;
+                width: 20rem;
+                background-color: #5A717C;
+                height: 7rem;
+                .textAlcohol {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    margin-top: -5px;
+                }
+                }
+            }
+            .priceProduct {
+                display: flex;
+                align-items: center;
+                column-gap: 1rem;
+                font-size: 4rem;
+            }
+            .amountOrdered {
+                display: flex;
+                align-items: center;
+                width: 32rem;
+                height: 4rem;
+                border: 2px dashed #333;
+                .textOrdered {
+                    padding-left: 1rem;
+                    color: #5A717C;
+                }
+            }
+            .infoTransport {
+                font-weight: 600;
+            }
+            .amountInStock {
+                color: green
+            }
+            .inputAmount {
+                width: 12rem;
+                height: 4rem;
+                display: flex;
+                justify-content: space-between;
+                border: 2px solid #999;
+                .input {
+                    display: flex;
+                    width: 6rem;
+                    font-size: 1.5rem;
+                }
+                .icon {
+                    color: #fff;
+                    background-color: #999;
+                    display: flex;
+                    flex: 1;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+            .buttonBuyProduct {
+                display: flex;
+                column-gap: 2rem;
+                .textCart {
+                    font-family: "ElenaWeb";
+                    background-color: #5A717C;
+                    border-radius: 1rem;
+                    font-weight: lighter;
+                }
+            }
+            .information {
+                padding-top: 2rem;
+                display: flex;
+                row-gap: 1rem;
+                flex-direction: column;
+                .textInfor {
+                    border-top: 1px solid #5A717C;
+                    padding-top: 1rem;
+                    color: #5A717C;
+                }
+            }
+        }
+    }
+}

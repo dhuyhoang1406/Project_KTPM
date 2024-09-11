@@ -1,0 +1,57 @@
+.mainHome {
+  padding-top: 7rem;
+  background-color: #ffeecc;
+  .introduceAboutWebSite {
+    display: flex;
+    height: 65rem;
+
+    .wrapperTextintroduce {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 10rem;
+
+      .introduceText {
+        display: flex;
+        flex-direction: column;
+
+        .hashtagText {
+          text-transform: uppercase;
+        }
+
+        .textDetails {
+          font-size: 6rem;
+          font-family: "Times New Roman", Times, serif;
+        }
+      }
+    }
+
+    .introduceImage {
+      padding-top: 2rem;
+      perspective: 1000px;
+      img {
+        height: 100%;
+        animation: Appearance 1s linear;
+      }
+    }
+  }
+
+  // .introduceProduct {
+  //     /* Mã CSS cho introduceProduct */
+  // }
+
+  // .hotEvent {
+  //     /* Mã CSS cho hotEvent */
+  // }
+}
+
+@keyframes Appearance {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

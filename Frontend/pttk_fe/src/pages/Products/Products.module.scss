@@ -1,0 +1,39 @@
+.wrapper{
+    padding: 6.5rem 3rem 0 3rem;
+    padding-top: 6.5rem;
+    width: 100%;
+}
+.wallpaper{
+    background-image: url("https://w0.peakpx.com/wallpaper/55/748/HD-wallpaper-italian-winecountry-house-italy-wine-home-grapes-hay-bales-green-fields-winery-firefox-persona-theme.jpg");
+    height: 30rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.mainPlace{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+.nav{
+    display: flex;
+    align-items: center;
+}
+.navText{
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+}
+.navText:hover{
+    color: rgba(221, 165, 25, 0.752);
+}
+.navLink{
+    padding: 0.5rem;
+    font-size: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    color: rgba(221, 165, 25, 0.752);
+}

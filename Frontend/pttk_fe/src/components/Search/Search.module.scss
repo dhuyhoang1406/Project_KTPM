@@ -1,0 +1,45 @@
+.wrapperSearch {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    .inputSearch {
+        width: 30rem;
+        padding: 0 3rem 0 3px;
+        font-size: 1.7rem;
+        font-family: 'Times New Roman', Times, serif;
+        background: transparent;
+        border-bottom: 2px solid #f1cd85;
+        border-radius: 5px;
+        position: relative;
+    }
+    .wrapperItemsProduct {
+        padding: 1rem 0;
+        background-color: rgba(0,0,0,0.2);
+        width: 100%;
+        position: absolute;
+        top: 3rem;
+        left: 0;
+        z-index: 10;
+        max-height: 50vh;
+        overflow-y: scroll;
+        .itemProduct{
+            width: 100%;
+            padding: 5px 0;
+            background-color: #fff;
+            border: 1px solid #333;
+            font-size: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .nameProduct {
+                padding: 0 5px 0 5rem;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+        }
+    }
+}

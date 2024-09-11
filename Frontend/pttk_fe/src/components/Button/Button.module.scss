@@ -1,0 +1,35 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: #333;
+    border: 1px solid transparent;
+    user-select: none;
+    color: #fff;
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}
+
+// Button sizes
+.small {
+    width: 88px;
+    padding: 4px 16px;
+}
+
+.primary {
+    width: 120px;
+    padding: 12px;
+}
+
+.large {
+    padding: 14px 16px;
+    width: 140px;
+}

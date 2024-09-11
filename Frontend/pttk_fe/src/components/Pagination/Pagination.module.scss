@@ -1,0 +1,39 @@
+.pagination{
+    margin-top: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+.button{
+    cursor: pointer;
+    border-radius: 100%;
+    margin-right:0.5rem;
+    background-color: white;
+    width: 5rem;
+    height: 5rem;
+    border: 2px solid rgba(0,0,0,0.3);
+    transition: all 0.25s;
+    font-weight: 700;
+}
+.button:hover{
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+}
+.chooseButton{
+    cursor: pointer;
+    border-radius: 100%;
+    margin-right:0.5rem;
+    width: 5rem;
+    height: 5rem;
+    font-weight: 700;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+}
+.spaceDot{
+    margin-right: 0.5rem;
+    font-size: 2.5rem;
+}
+
+.noResults {
+    font-size: 2rem;
+}
