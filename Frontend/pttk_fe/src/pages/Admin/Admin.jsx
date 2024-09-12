@@ -31,6 +31,17 @@ const Admin = () => {
     setStatus(!status);
   };
 
+  const handlePhoneChange = (event) => {
+    const value = event.target.value;
+  
+    if (/^\d{0,10}$/.test(value)) {
+      setPhone(value);
+    } else {
+      error("Số điện thoại chỉ được phép chứa số và tối đa 10 số!");
+    }
+  };
+  
+
   const isValidDateAndAge = (dateString) => {
     const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
     if (!datePattern.test(dateString)) {
@@ -295,7 +306,7 @@ const Admin = () => {
                   <p className={styles.text}>Số Điện Thoại</p>
                   <input
                     value={phone}
-                    onChange={(event) => setPhone(event.target.value)}
+                    onChange={handlePhoneChange}
                     className={styles.input}
                     style={{ width: "30rem", padding: "1rem" }}
                     placeholder="Nhập Số Điện Thoại"

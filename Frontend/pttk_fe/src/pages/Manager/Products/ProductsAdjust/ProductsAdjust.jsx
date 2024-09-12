@@ -43,11 +43,9 @@ const ProductsAdjust = ({ isCEO }) => {
       return;
     }
     if (data.concentration > 70) {
-        error(
-          "Nồng độ cồn không vượt quá 70%!"
-        );
-        return;
-      }
+      error("Nồng độ cồn không vượt quá 70%!");
+      return;
+    }
     for (let key in data) {
       if (data.hasOwnProperty("category")) {
         if (
@@ -67,20 +65,14 @@ const ProductsAdjust = ({ isCEO }) => {
 
   const handleConcentrationChange = (event) => {
     const value = event.target.value;
-    if (
-      /^\d*$/.test(value) &&
-      (value === "" || !value.startsWith("0"))
-    ) {
+    if (/^\d*$/.test(value) && (value === "" || !value.startsWith("0"))) {
       setData({ ...data, concentration: value });
     }
   };
 
   const handleVolumeChange = (event) => {
     const value = event.target.value;
-    if (
-      /^\d*$/.test(value) &&
-      (value === "" ||  !value.startsWith("0"))
-    ) {
+    if (/^\d*$/.test(value) && (value === "" || !value.startsWith("0"))) {
       setData({ ...data, volume: value });
     }
   };
@@ -217,14 +209,35 @@ const ProductsAdjust = ({ isCEO }) => {
             </p>
             <div style={{ paddingLeft: "1rem" }}>
               <p className={styles.text}>Tên Sản Phẩm</p>
-              {/* <input className={styles.input} value={data.name} onChange={(event)=>setData({...data,name:event.target.value})} style={{width:"40rem"}} placeholder="Nhập Tên Sản Phẩm"/> */}
-              {/* <span style={{marginLeft:"1rem",fontWeight:"700",color:"rgb(150, 150, 150)"}}>* Tên sản phẩm không được để trống *</span> */}
-              <span
-                className={styles.input}
-                style={{ width: "40rem", border: "none" }}
-              >
-                {data.name}
-              </span>
+              {id ? (
+                <span
+                  className={styles.input}
+                  style={{ width: "40rem", border: "none" }}
+                >
+                  {data.name}
+                </span>
+              ) : (
+                <>
+                  <input
+                    className={styles.input}
+                    value={data.name}
+                    onChange={(event) =>
+                      setData({ ...data, name: event.target.value })
+                    }
+                    style={{ width: "40rem" }}
+                    placeholder="Nhập Tên Sản Phẩm"
+                  />
+                  <span
+                    style={{
+                      marginLeft: "1rem",
+                      fontWeight: "700",
+                      color: "rgb(150, 150, 150)",
+                    }}
+                  >
+                    * Tên sản phẩm không được để trống *
+                  </span>
+                </>
+              )}
               <div style={{ display: "flex", gap: "2rem" }}>
                 <div>
                   <p className={styles.text}>Nồng Độ Cồn</p>
@@ -262,7 +275,26 @@ const ProductsAdjust = ({ isCEO }) => {
               <div style={{ display: "flex", gap: "2rem" }}>
                 <div>
                   <p className={styles.text}>Giá Tiền</p>
-                  {/* <input value={data.price} onChange={(event)=>setData({...data,price:event.target.value})} type="number" className={styles.input} placeholder="Giá Bán Sản Phẩm"/> */}
+                  {id ? (
+                    <span
+                      className={styles.input}
+                      style={{ width: "40rem", border: "none" }}
+                    >
+                      {data.price}
+                    </span>
+                  ) : (
+                    <>
+                      <input
+                        value={data.price}
+                        onChange={(event) =>
+                          setData({ ...data, price: event.target.value })
+                        }
+                        type="number"
+                        className={styles.input}
+                        placeholder="Giá Bán Sản Phẩm"
+                      />
+                    </>
+                  )}
                   <span
                     className={styles.input}
                     style={{ width: "40rem", border: "none" }}

@@ -46,6 +46,7 @@ export const getAllOrderForManager = async (start,end,status,page,size) => {
 }
 export const updateOrder = async (status,id) => {
   try {
+    console.log(status)
     await axios.put(`${process.env.REACT_APP_API_URL}/DonHang/${id}`,{
       trangThai:status,
     },{

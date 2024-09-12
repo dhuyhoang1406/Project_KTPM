@@ -62,7 +62,6 @@ public class TrangThaiDonHangServices implements  ITrangThaiDonHangServices{
 
         // Kiểm tra xem đã tồn tại trạng thái đơn hàng cũ chưa
         TrangThaiDonHang trangThaiDonHangCu = trangThaiDonHangMoiNhat(form.getMaDH());
-
         if (trangThaiDonHangCu != null) {
             // Nếu trạng thái mới là "Hủy", bỏ qua kiểm tra số lượng và chỉ set trạng thái
             if (form.getTrangThai().equals(TrangThai.Huy)) {

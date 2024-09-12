@@ -55,7 +55,7 @@ public class CTPNKServices implements ICTPNKServices{
 
         // Tăng số lượng sản phẩm lên sau khi tạo ra Chi Tiết Phiếu Nhập Kho
         SanPham sanPham = sanPhamRepository.findById(form.getMaSP()).get();
-        sanPham.setSoLuongConLai( sanPham.getSoLuongConLai() + form.getSoLuong());
+        sanPham.setSoLuongConLai(sanPham.getSoLuongConLai() + form.getSoLuong());
 
         //Lưu lại
         sanPhamRepository.save(sanPham);

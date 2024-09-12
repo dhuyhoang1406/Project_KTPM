@@ -11,11 +11,21 @@ import InputNumberComponent from "../../components/InputComponent/InputNumberCom
 
 const Profile = () => {
   const user = useSelector(state => state.user);
-  const [name, setName] = useState(user.hoTen);
-  const [phoneNumber, setPhoneNumber] = useState(user.soDienThoai);
-  const [address, setAddress] = useState(user.diaChi);
-  const [gender, setGender] = useState(user.gioiTinh);
-  const [dayOfBirth, setDayOfBirth] = useState(user.ngaySinh);
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("");
+  const [dayOfBirth, setDayOfBirth] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setName(user.hoTen || "");
+      setPhoneNumber(user.soDienThoai || "");
+      setAddress(user.diaChi || "");
+      setGender(user.gioiTinh || "");
+      setDayOfBirth(user.ngaySinh || "");
+    }
+  }, [user]);
 
   // const [layout, setLayout] = useState(1);
   const navigate = useNavigate();
@@ -38,7 +48,6 @@ const Profile = () => {
   const handleOnChangeNameProfile = (event) => {
       setName(event.target.value);
   };
-  
   
 
   const handleOnChangePhoneNumberProfile = (event) => {
@@ -187,7 +196,7 @@ const Profile = () => {
               <label>Họ và tên: {user?.hoTen}</label>
               <input
                 className={styles.inputUpdateUser}
-                value={name || user?.hoTen}
+                value={name}
                 onChange={handleOnChangeNameProfile}
                 placeholder="Nguyễn Văn A"
               />
@@ -196,7 +205,7 @@ const Profile = () => {
               <label>Số điện thoại: {user?.soDienThoai}</label>
               <InputNumberComponent
                 className={styles.inputUpdateUser}
-                value={phoneNumber || user?.soDienThoai}
+                value={phoneNumber}
                 onChange={handleOnChangePhoneNumberProfile}
                 placeholder="0123456789"
               />
@@ -205,7 +214,7 @@ const Profile = () => {
               <label>Địa chỉ: {user?.diaChi}</label>
               <input
                 className={styles.inputUpdateUser}
-                value={address || user?.diaChi}
+                value={address}
                 onChange={handleOnChangeAddressProfile}
                 placeholder="4/23, Điện Biên Phủ, TP.HCM"
               />
@@ -231,11 +240,11 @@ const Profile = () => {
 
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <label>Ngày sinh: {user?.ngaySinh + " (MM/dd/yyyy)"}</label>
+              <label>Ngày sinh: {user?.ngaySinh + " (dd/MM/yyyy)"}</label>
               <span style={{color:"#777"}}>* Bạn phải đủ 18 tuổi và ngày sinh phải hợp lệ</span>
               <input
                     className={styles.inputUpdateUser}
-                    value={dayOfBirth || user.ngaySinh}
+                    value={dayOfBirth}
                     placeholder="VD: 02/04/2004"
                     onChange={(e) => {
                       setDayOfBirth(e.target.value);
