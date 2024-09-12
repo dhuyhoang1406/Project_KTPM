@@ -36,8 +36,10 @@ const Profile = () => {
   // console.log(slug)
 
   const handleOnChangeNameProfile = (event) => {
-    setName(event.target.value);
+      setName(event.target.value);
   };
+  
+  
 
   const handleOnChangePhoneNumberProfile = (event) => {
     setPhoneNumber(event.target.value);
@@ -66,22 +68,58 @@ const Profile = () => {
     const Username = localStorage.getItem('Username');
     const Password = localStorage.getItem('Password');
     const id = localStorage.getItem('id');
-    const hoTen = name || user.hoTen;
-    const diaChi = address || user.diaChi;  
-    const gioiTinh = gender || user?.gioiTinh;
-    const soDienThoai = phoneNumber || user.soDienThoai;
-    const ngaySinh = dayOfBirth || user?.ngaySinh;
+    
+    // Trimming the form data
+    const hoTen = (name || user.hoTen).trim();
+    const diaChi = (address || user.diaChi).trim();
+    const gioiTinh = (gender || user?.gioiTinh).trim();
+    const soDienThoai = (phoneNumber || user.soDienThoai).trim();
+    const ngaySinh = (dayOfBirth || user?.ngaySinh).trim();
+  
+    // Validate name (only letters and spaces, no leading space)
+    const namePattern = /^[^\s][\p{L}\s]+$/u;
+    if (!namePattern.test(hoTen)) {
+      message.warning('Họ tên chỉ được chứa chữ cái và không bắt đầu bằng khoảng trắng!');
+      return;
+    }
+  
+    const birthDate = new Date(ngaySinh);
+    const today = new Date();
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const dayDiff = today.getDate() - birthDate.getDate();
+  
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
+  
+    if (isNaN(birthDate.getTime()) || age < 18) {
+      message.warning('Ngày sinh phải hợp lệ và bạn phải đủ 18 tuổi!');
+      return;
+    }
+  
     const formData = {
-      hoTen, diaChi, gioiTinh, soDienThoai, ngaySinh, trangThai: true, vaiTro:'User'
+      hoTen,
+      diaChi,
+      gioiTinh,
+      soDienThoai,
+      ngaySinh,
+      trangThai: true,
+      vaiTro: 'User'
     };
-    // console.log(formData);
+  
     if (hoTen && diaChi && gioiTinh && soDienThoai && ngaySinh) {
-      const res = await UserService.updateUser(id, formData, { Username, Password });
-
+      try {
+        await UserService.updateUser(id, formData, { Username, Password });
+        // message.success('Cập nhật thông tin thành công !');
+      } catch (error) {
+        message.error("Cập nhật thông tin tài khoản không thành công !");
+      }
     } else {
       message.warning('Vui lòng nhập đầy đủ thông tin !!!');
     }
   };
+  
 
   const handleChangePassword = async () => {
     const Username = localStorage.getItem('Username');
@@ -193,14 +231,14 @@ const Profile = () => {
 
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <label>Ngày sinh: {user?.ngaySinh}</label>
+              <label>Ngày sinh: {user?.ngaySinh + " (MM/dd/yyyy)"}</label>
+              <span style={{color:"#777"}}>* Bạn phải đủ 18 tuổi và ngày sinh phải hợp lệ</span>
               <input
                     className={styles.inputUpdateUser}
                     value={dayOfBirth || user.ngaySinh}
                     placeholder="VD: 02/04/2004"
                     onChange={(e) => {
-                   
-                        setDayOfBirth(e.target.value);
+                      setDayOfBirth(e.target.value);
                     }}
               />
             </div>

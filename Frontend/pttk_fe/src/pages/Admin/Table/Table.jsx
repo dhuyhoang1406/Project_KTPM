@@ -106,6 +106,7 @@ const Table = ({heads,bodys,setShowModal,setId,setName,setPhone,setDate,setGende
                                             setGender(body.gioiTinh)
                                             setPhone(body.soDienThoai)
                                             setChooseRole(body.vaiTro)
+                                            // setPassword(body)
                                             setShowModal(true)
                                             }}>Sửa</button>
                                     </td>   

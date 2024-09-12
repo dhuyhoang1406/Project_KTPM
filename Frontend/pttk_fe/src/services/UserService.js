@@ -50,7 +50,7 @@ export const updateUser = async (id,data) => {
         })
         success("Cập nhật thành công")
     } catch (error) {
-        errorMessage(`Cập nhật thất bại : ${error.response.data.error.message}`)
+        errorMessage(`Cập nhật thất bại`)
     }
 }
 
