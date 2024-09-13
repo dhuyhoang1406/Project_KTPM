@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import FormLoginInput from "../../components/FormLoginInput/FormLoginInput";
 import * as UserService from "../../services/UserService";
 import * as message from "../../components/Message/Message";
+import { formatBirthDate } from "../../services/FeatureService";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -34,71 +35,7 @@ const SignUp = () => {
     return true;
   };
 
-  const isValidDate = (dateString) => {
-    // Kiểm tra đúng cú pháp ngày tháng (dd/mm/yyyy)
-    const datePattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-    if (!datePattern.test(dateString)) {
-      return false;
-    }
-
-    // Tách ngày, tháng, năm từ chuỗi
-    const [day, month, year] = dateString.split("/");
-
-    // Chuyển đổi ngày, tháng, năm thành số nguyên
-    const parsedDay = parseInt(day, 10);
-    const parsedMonth = parseInt(month, 10);
-    const parsedYear = parseInt(year, 10);
-
-    // Lấy ngày hiện tại
-    const currentDate = new Date();
-    const curYear = currentDate.getFullYear();
-    const curMonth = currentDate.getMonth() + 1;
-    const curDay = currentDate.getDate();
-
-    // Kiểm tra ngày, tháng, năm có hợp lệ và không lớn hơn ngày tháng năm hiện tại
-    if (
-      parsedYear < 1 ||
-      parsedMonth < 1 ||
-      parsedMonth > 12 ||
-      parsedDay < 1 ||
-      parsedDay > 31 ||
-      (parsedYear === curYear && parsedMonth > curMonth) ||
-      (parsedYear === curYear && parsedMonth === curMonth && parsedDay > curDay)
-    ) {
-      return false;
-    }
-
-    const daysInMonth = new Date(parsedYear, parsedMonth, 0).getDate();
-    if (parsedDay > daysInMonth) {
-      return false;
-    }
-
-    // Kiểm tra năm nhuận cho tháng 2
-    if (parsedMonth === 2) {
-      if (
-        (parsedYear % 4 === 0 && parsedYear % 100 !== 0) ||
-        parsedYear % 400 === 0
-      ) {
-        if (parsedDay > 29) {
-          return false;
-        }
-      } else {
-        if (parsedDay > 28) {
-          return false;
-        }
-      }
-    }
-
-    // If date is valid, check if the user is at least 18 years old
-    const birthDate = new Date(parsedYear, parsedMonth - 1, parsedDay); // month is 0-indexed in JavaScript
-    const age = calculateAge(birthDate);
-
-    if (age < 18) {
-      return "ageError"; // If age is less than 18
-    }
-
-    return true;
-  };
+  
 
   const calculateAge = (birthDate) => {
     const today = new Date();
@@ -156,21 +93,23 @@ const SignUp = () => {
       setBirthdayError("Vui lòng nhập ngày sinh");
       isValid = false;
     } else {
-      const isValidBirthday = isValidDate(birthday);
-
-      if (isValidBirthday === false) {
-        setBirthdayError(
-          "Vui lòng nhập đúng cú pháp dd/MM/yyyy !! (VD: 02/04/2004)"
-        );
-        isValid = false;
-      } else if (isValidBirthday === "ageError") {
-        message.error("Bạn phải đủ 18 tuổi và ngày sinh phải hợp lệ!");
-        setBirthdayError("Bạn phải đủ 18 tuổi!");
+      const today = new Date();
+      const birthDate = new Date(birthday);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDifference = today.getMonth() - birthDate.getMonth();
+    
+      if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+    
+      if (age < 18) {
+        setBirthdayError("Người dùng phải ít nhất 18 tuổi.");
         isValid = false;
       } else {
         setBirthdayError("");
       }
     }
+    
 
     // Kiểm tra address
     if (!address) {
@@ -269,7 +208,7 @@ const SignUp = () => {
       const role = "User";
       const formData = {
         hoTen: name,
-        ngaySinh: birthday,
+        ngaySinh: formatBirthDate(birthday),
         diaChi: address,
         gioiTinh: gender,
         soDienThoai: phoneNumber,
@@ -315,7 +254,7 @@ const SignUp = () => {
             label="birthday"
             labelUppercase="Ngày sinh (dd/MM/yyyy)"
             placeholder="1/1/1990"
-            type="text"
+            type="date"
             value={birthday}
             onChange={(e) => handleInputChange("birthday", e.target.value)}
             message={birthdayError}
