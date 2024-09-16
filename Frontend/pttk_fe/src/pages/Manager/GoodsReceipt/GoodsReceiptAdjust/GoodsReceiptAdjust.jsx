@@ -86,6 +86,9 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
     if (data.maNhaCungCap === "") {
       return { status: "error", message: "Nhà cung cấp không được để trống" };
     }
+    if (data.loiNhuan === 0) {
+      return { status: "error", message: "Lợi nhuận phải lớn hơn 0" };
+    }
     if (data.danhSachCTPNK.length !== 0) {
       for (let i = 0; i < data.danhSachCTPNK.length; i++) {
         if (
