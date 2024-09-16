@@ -31,9 +31,10 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
   const [details, setDetails] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1); 
+  const [totalPages, setTotalPages] = useState(1);
+  const [profit, setProfit] = useState(0);
 
-  const productsPerPage = 10; 
+  const productsPerPage = 10;
 
   const handleActionChooseProduct = (id, name) => {
     const index = chooseProducts.findIndex((product) => product.id === id);
@@ -122,6 +123,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
         };
       }),
     };
+
     const validate = validateReceipt(data);
     if (validate.status === "success") {
       await createReceipt(data);
@@ -162,9 +164,21 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
   }, [chooseProducts]);
 
   useEffect(() => {
-    getAllProduct(debounceSearch, page, productsPerPage, null, null, null, null, null, null,null,true).then((res) => {
+    getAllProduct(
+      debounceSearch,
+      page,
+      productsPerPage,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      true
+    ).then((res) => {
       setProducts(res.data.content);
-      setTotalPages(res.data.totalPages); 
+      setTotalPages(res.data.totalPages);
     });
   }, [debounceSearch, page]);
 
@@ -392,6 +406,29 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
                 })}
               </select>
             )}
+          </label>
+          <label>
+            <p
+              style={{
+                fontSize: "1.3rem",
+                fontWeight: "700",
+                marginTop: "1rem",
+              }}
+            >
+              Tỉ suất lợi nhuận
+            </p>
+            <input
+              type="number"
+              value={profit}
+              min="0"
+              max="100"
+              onChange={(e) => {
+                const value = parseFloat(e.target.value);
+                if (value >= 0 && value <= 100) {
+                  setProfit(value);
+                }
+              }}
+            />
           </label>
           <label>
             <p
