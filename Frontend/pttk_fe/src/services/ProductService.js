@@ -22,8 +22,8 @@ export const getProductType = async () => {
         return res
 }
 
-export const getAllProduct = async (search, page, size, minThetich, maxTheTich, minNongdoCon, maxNongdoCon, minGia, maxGia,tenLoaiSanPham) => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/SanPham?sort=maSP&pageNumber=${page}${size && `&size=${size}`}${minThetich ? `&minTheTich=${minThetich}` :''}${maxTheTich ? `&maxTheTich=${maxTheTich}` : ''}${minNongdoCon ? `&minNongDoCon=${minNongdoCon}` : ''}${maxNongdoCon ? `&maxNongDoCon=${maxNongdoCon}` : '' }${minGia ? `&minGia=${minGia}` : ''}${maxGia ? `&maxGia=${maxGia}` : ''}${tenLoaiSanPham ? `&tenLoaiSanPham=${tenLoaiSanPham}` : ''}${search ? `&search=${search}` : ''}`,{
+export const getAllProduct = async (search, page, size, minThetich, maxTheTich, minNongdoCon, maxNongdoCon, minGia, maxGia,tenLoaiSanPham,trangThai) => {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/SanPham?sort=maSP&pageNumber=${page}${size && `&size=${size}`}${minThetich ? `&minTheTich=${minThetich}` :''}${maxTheTich ? `&maxTheTich=${maxTheTich}` : ''}${minNongdoCon ? `&minNongDoCon=${minNongdoCon}` : ''}${maxNongdoCon ? `&maxNongDoCon=${maxNongdoCon}` : '' }${minGia ? `&minGia=${minGia}` : ''}${maxGia ? `&maxGia=${maxGia}` : ''}${tenLoaiSanPham ? `&tenLoaiSanPham=${tenLoaiSanPham}` : ''}${search ? `&search=${search}` : ''}${trangThai ? `&trangThai=${trangThai}` : ''}`,{
         headers: {
             "Authorization": JWT
         }

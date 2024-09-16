@@ -26,6 +26,6 @@ export const createReceipt = async (data) => {
         })
         success("Tạo thành công")
     } catch (error) {
-        errorMessage(`Tạo thất bại : ${error.response.data.error.message}`)
+        errorMessage("Tạo thất bại")
     }
 }

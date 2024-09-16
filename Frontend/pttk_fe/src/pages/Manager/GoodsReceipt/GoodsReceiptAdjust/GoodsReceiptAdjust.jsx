@@ -11,6 +11,7 @@ import { convertPrice } from "../../../../services/FeatureService";
 import { useNavigate, useParams } from "react-router-dom";
 import { createReceipt, getReceipt } from "../../../../services/ReceiptService";
 import { getAllUser } from "../../../../services/UserService";
+
 const GoodsReceiptAdjust = ({ isCEO }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -22,13 +23,18 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
   const [manager, setManager] = useState();
   const [chooseManager, setChooseManager] = useState("");
   const [products, setProducts] = useState([]);
-  const [suppliers, setSupplers] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
   const [chooseProducts, setChooseProducts] = useState([]);
   const [chooseSupplier, setChooseSupplier] = useState("");
   const [total, setTotal] = useState(0);
   const [date, setDate] = useState("");
   const [details, setDetails] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1); 
+
+  const productsPerPage = 10; 
+
   const handleActionChooseProduct = (id, name) => {
     const index = chooseProducts.findIndex((product) => product.id === id);
     if (index !== -1) {
@@ -42,6 +48,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
       ]);
     }
   };
+
   const handlePrice = (id, price) => {
     const index = chooseProducts.findIndex((product) => product.id === id);
     let updateProduct = { ...chooseProducts[index] };
@@ -50,6 +57,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
     updateProducts[index] = updateProduct;
     setChooseProducts(updateProducts);
   };
+
   const handleAmount = (id, amount) => {
     const index = chooseProducts.findIndex((product) => product.id === id);
     let updateProduct = { ...chooseProducts[index] };
@@ -58,6 +66,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
     updateProducts[index] = updateProduct;
     setChooseProducts(updateProducts);
   };
+
   const handleTotal = () => {
     const updateTotal = chooseProducts.reduce((accumulator, currentValue) => {
       return (
@@ -68,6 +77,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
     }, 0);
     setTotal(updateTotal);
   };
+
   const validateReceipt = (data) => {
     if (data.maQuanLy === "") {
       return { status: "error", message: "Quản lý không được để trống" };
@@ -97,6 +107,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
     }
     return { status: "success", message: "Kiểm duyệt thành công" };
   };
+
   const handleSubmit = async () => {
     const data = {
       tongGiaTri: total,
@@ -118,14 +129,12 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
       error(validate.message);
     }
   };
+
   const handleCheck = (id) => {
     const index = chooseProducts.findIndex((product) => product.id === id);
-    if (index !== -1) {
-      return true;
-    } else {
-      return false;
-    }
+    return index !== -1;
   };
+
   useEffect(() => {
     if (id) {
       getReceipt(id).then((res) => {
@@ -137,7 +146,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
       });
     } else {
       getAllSupplier().then((res) => {
-        setSupplers(res.data.content);
+        setSuppliers(res.data.content);
       });
       getAllUser(1, null, "Manager").then((res) => {
         setManagers(res.data.content);
@@ -146,15 +155,31 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
         setCeo(res.data.content);
       });
     }
-  }, []);
+  }, [id]);
+
   useEffect(() => {
     handleTotal();
   }, [chooseProducts]);
+
   useEffect(() => {
-    getAllProduct(debounceSearch, 1, 5).then((res) => {
+    getAllProduct(debounceSearch, page, productsPerPage, null, null, null, null, null, null,null,true).then((res) => {
       setProducts(res.data.content);
+      setTotalPages(res.data.totalPages); 
     });
-  }, [debounceSearch]);
+  }, [debounceSearch, page]);
+
+  const handleNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <div
@@ -434,7 +459,6 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
                       }}
                     >
                       <th style={{ padding: "0.5rem" }}>Mã Sản Phẩm</th>
-                      <th style={{ padding: "0.5rem" }}>Hình Ảnh</th>
                       <th style={{ padding: "0.5rem" }}>Tên Sản Phẩm</th>
                       <th style={{ padding: "0.5rem" }}>Thao Tác</th>
                     </tr>
@@ -456,14 +480,10 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
                               {product.maSP}
                             </td>
                             <td style={{ padding: "0.5rem" }}>
-                              {product.hinhAnh}
-                            </td>
-                            <td style={{ padding: "0.5rem" }}>
                               {product.tenSP}
                             </td>
                             <td style={{ padding: "0.5rem" }}>
                               <input
-                                type="checkbox"
                                 onChange={() =>
                                   handleActionChooseProduct(
                                     product.maSP,
@@ -471,6 +491,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
                                   )
                                 }
                                 checked={handleCheck(product.maSP)}
+                                type="checkbox"
                               />
                             </td>
                           </tr>
@@ -478,20 +499,50 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
                       })
                     ) : (
                       <tr>
-                        <td
-                          colSpan={4}
-                          style={{
-                            textAlign: "center",
-                            fontWeight: "700",
-                            padding: "1rem",
-                          }}
-                        >
-                          Không tìm thấy bất kỳ phiếu nào
+                        <td colSpan={4} style={{ padding: "0.5rem" }}>
+                          Không có sản phẩm nào
                         </td>
                       </tr>
                     )}
                   </tbody>
                 </table>
+              </div>
+              <div className={styles.pagination}>
+                <button
+                  style={{
+                    width: "8rem",
+                    height: "4rem",
+                    margin: "3rem 1rem 0 0",
+                    background: "#333",
+                    borderRadius: "1rem",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                  onClick={handlePrevPage}
+                  disabled={page === 1}
+                  className={styles.pagination_button}
+                >
+                  Trang trước
+                </button>
+                <span className={styles.pagination_info}>
+                  Trang {page} / {totalPages}
+                </span>
+                <button
+                  style={{
+                    width: "8rem",
+                    height: "4rem",
+                    margin: "3rem 0 0 1rem",
+                    background: "#333",
+                    borderRadius: "1rem",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                  onClick={handleNextPage}
+                  disabled={page === totalPages}
+                  className={styles.pagination_button}
+                >
+                  Trang sau
+                </button>
               </div>
             </div>
           </div>
@@ -500,4 +551,5 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
     </div>
   );
 };
+
 export default GoodsReceiptAdjust;
