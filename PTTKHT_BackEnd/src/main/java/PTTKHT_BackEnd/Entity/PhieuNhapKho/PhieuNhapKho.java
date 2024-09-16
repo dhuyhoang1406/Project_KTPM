@@ -32,6 +32,9 @@ public class PhieuNhapKho implements Serializable {
     @Column(name = "TongGiaTri", nullable = false)
     private Integer tongGiaTri;
 
+    @Column(name = "LoiNhuan", nullable = false)
+    private Integer loiNhuan;
+
     @ManyToOne
     @JoinColumn(name = "MaNCC", nullable = false)
     private NhaCungCap nhaCungCap;

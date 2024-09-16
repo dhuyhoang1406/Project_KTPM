@@ -24,8 +24,11 @@ public class PhieuNhapKhoCreateForm {
     @NotNull(message = "Không được để trống mã nhà cung cấp !!")
     private Integer maNhaCungCap;
 
-    @NotNull(message = "Không được để trống mã quản l !!")
+    @NotNull(message = "Không được để trống mã quản lý !!")
     private Integer maQuanLy;
+
+    @NotNull(message = "Không được để trống lợi nhuận !!")
+    private Integer loiNhuan;
 
     @NotNull(message = "Không được để trống chi tiết phiếu nhập kho !!")
     private List<CTPNKCreateForm> danhSachCTPNK;

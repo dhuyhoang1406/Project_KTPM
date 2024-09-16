@@ -56,6 +56,7 @@ public class PhieuNhapKhoServices implements IPhieuNhapKhoServices{
     public void createPhieuNhapKho(PhieuNhapKhoCreateForm form){
         PhieuNhapKho phieuNhapKho = new PhieuNhapKho();
         phieuNhapKho.setTongGiaTri(form.getTongGiaTri());
+        phieuNhapKho.setLoiNhuan((100+ form.getLoiNhuan())/100);
 
         //Tìm nhà cung cấp đưa vào
         NhaCungCap nhaCungCap = nhaCungCapRepository.findById(form.getMaNhaCungCap()).get();

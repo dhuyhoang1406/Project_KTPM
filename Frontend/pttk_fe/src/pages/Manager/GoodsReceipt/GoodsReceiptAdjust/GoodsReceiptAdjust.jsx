@@ -114,6 +114,7 @@ const GoodsReceiptAdjust = ({ isCEO }) => {
       tongGiaTri: total,
       maNhaCungCap: chooseSupplier,
       maQuanLy: chooseManager,
+      loiNhuan: profit,
       danhSachCTPNK: chooseProducts.map((product) => {
         return {
           maSP: product.id,
