@@ -28,7 +28,7 @@ public class PhieuNhapKhoCreateForm {
     private Integer maQuanLy;
 
     @NotNull(message = "Không được để trống lợi nhuận !!")
-    private Integer loiNhuan;
+    private Float loiNhuan;
 
     @NotNull(message = "Không được để trống chi tiết phiếu nhập kho !!")
     private List<CTPNKCreateForm> danhSachCTPNK;

@@ -78,6 +78,7 @@ const ProductsAdjust = ({ isCEO }) => {
   };
 
   const handleSubmit = async () => {
+    
     if (validProduct(data)) {
       if (id) {
         await updateProduct(id, {
@@ -85,7 +86,7 @@ const ProductsAdjust = ({ isCEO }) => {
           xuatXu: data.origin,
           theTich: data.volume,
           nongDoCon: data.concentration,
-          gia: data.price,
+          // gia: data.price,
           thuongHieu: data.label,
           anhMinhHoa: selectedImage,
           maLoaiSanPham: data.category.maLoaiSanPham,
@@ -96,7 +97,7 @@ const ProductsAdjust = ({ isCEO }) => {
           xuatXu: data.origin,
           theTich: data.volume,
           nongDoCon: data.concentration,
-          gia: data.price,
+          // gia: parseInt(0),
           thuongHieu: data.label,
           anhMinhHoa: selectedImage,
           maLoaiSanPham: data.category.maLoaiSanPham,
@@ -274,7 +275,7 @@ const ProductsAdjust = ({ isCEO }) => {
               {/* <span style={{marginLeft:"1rem",fontWeight:"700",color:"rgb(150, 150, 150)"}}>* Nồng Độ Cồn Không Quá 70% *</span> */}
               <div style={{ display: "flex", gap: "2rem" }}>
                 <div>
-                  <p className={styles.text}>Giá Tiền</p>
+                  {/* <p className={styles.text}>Giá Tiền</p>
                   {id ? (
                     <span
                       className={styles.input}
@@ -302,7 +303,7 @@ const ProductsAdjust = ({ isCEO }) => {
                     {data.price}
                   </span>
                 </div>
-                <div>
+                <div> */}
                   <p className={styles.text}>Xuất xứ</p>
                   <input
                     value={data.origin}

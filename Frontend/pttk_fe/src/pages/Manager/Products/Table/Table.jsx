@@ -27,7 +27,7 @@ const Table = ({isCEO,heads,bodys,setChange})=>{
                                         <td className={styles.td} style={{width:'10rem',height:'10rem'}} key={index+'anh'}><img style={{width:"100%"}} src={body.anhMinhHoa}></img></td>
                                         <td className={styles.td} style={{width:'10rem',height:'10rem'}} key={index+'ten'}>{body.tenSP}</td>
                                         <td className={styles.td} style={{width:'10rem',height:'10rem'}} key={index+'ten'}>{body.tenLoaiSanPham}</td>
-                                        <td className={styles.td} key={index+'gia'}>{convertPrice(body.gia)}</td>
+                                        <td className={styles.td} key={index+'gia'}>{convertPrice(body.gia) }</td>
                                         <td className={styles.td} key={index+'nongDo'}>{body.nongDoCon}</td>
                                         <td className={styles.td} key={index+'theTich'}>{body.theTich}</td>
                                         <td className={styles.td} key={index+'xuatXu'}>{body.xuatXu}</td>

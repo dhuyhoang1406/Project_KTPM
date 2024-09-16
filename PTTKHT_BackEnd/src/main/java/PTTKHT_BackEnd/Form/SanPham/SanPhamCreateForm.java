@@ -26,9 +26,9 @@ public class SanPhamCreateForm {
     @DecimalMax(value = "100.0", message = "Nồng độ cồn phải nhỏ hơn hoặc bằng 100 !!")
     private Float nongDoCon;
 
-    @Positive(message = "Giá phải là số dương !!")
-    @NotNull(message = "Không được để trống giá bán !!")
-    private Integer gia;
+    // @Positive(message = "Giá phải là số dương !!")
+    // @NotNull(message = "Không được để trống giá bán !!")
+    // private Integer gia;
 
     @NotNull(message = "Hãy thêm ảnh vào cho mọi người dễ nhìn nào :3")
     private String anhMinhHoa;

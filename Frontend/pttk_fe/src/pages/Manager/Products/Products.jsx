@@ -122,7 +122,6 @@ const Products = ({ isCEO }) => {
     change,
     chooseCategory,
   ]);
-
   useEffect(() => {
     getAllCategoriesWithOutPageable().then((res) => {
       setCategories(res.data);

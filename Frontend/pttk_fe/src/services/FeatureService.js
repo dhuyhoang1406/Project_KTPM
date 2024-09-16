@@ -1,4 +1,5 @@
 export const convertPrice = (price) =>{
+    if(price===0) return 0 + ' VND'
     if(price){
         var strAmount = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         // Thêm đơn vị tiền tệ 'VND' vào sau chuỗi số

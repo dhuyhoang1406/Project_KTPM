@@ -62,7 +62,7 @@ public class SanPhamServices implements ISanPhamServices{
             sanPham.setNongDoCon(form.getNongDoCon());
             sanPham.setXuatXu(form.getXuatXu());
             sanPham.setThuongHieu(form.getThuongHieu());
-            sanPham.setGia(form.getGia());
+            sanPham.setGia(0);
             sanPham.setAnhMinhHoa(form.getAnhMinhHoa());
 
             sanPham.setLoaiSanPham(loaiSanPhamRepository.findById(form.getMaLoaiSanPham()).get());
@@ -88,7 +88,7 @@ public class SanPhamServices implements ISanPhamServices{
             sanPham.setNongDoCon(form.getNongDoCon());
             sanPham.setXuatXu(form.getXuatXu());
             sanPham.setThuongHieu(form.getThuongHieu());
-            sanPham.setGia(form.getGia());
+            sanPham.setGia(0);
             sanPham.setAnhMinhHoa(form.getAnhMinhHoa());
             sanPham.setLoaiSanPham(loaiSanPhamRepository.findById(form.getMaLoaiSanPham()).get());
             sanPham.setTrangThai(sanPhamCu.getTrangThai());

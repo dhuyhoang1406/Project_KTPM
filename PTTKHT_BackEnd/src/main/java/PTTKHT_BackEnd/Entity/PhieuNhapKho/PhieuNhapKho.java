@@ -33,7 +33,7 @@ public class PhieuNhapKho implements Serializable {
     private Integer tongGiaTri;
 
     @Column(name = "LoiNhuan", nullable = false)
-    private Integer loiNhuan;
+    private Float loiNhuan;
 
     @ManyToOne
     @JoinColumn(name = "MaNCC", nullable = false)

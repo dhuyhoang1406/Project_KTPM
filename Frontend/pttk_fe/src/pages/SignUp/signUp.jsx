@@ -252,7 +252,7 @@ const SignUp = () => {
 
           <FormLoginInput
             label="birthday"
-            labelUppercase="Ngày sinh (dd/MM/yyyy)"
+            labelUppercase="Ngày sinh"
             placeholder="1/1/1990"
             type="date"
             value={birthday}

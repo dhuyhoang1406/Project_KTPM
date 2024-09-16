@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-PttkhtBackEndApplication<PTTKHT_BackEnd>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "PTTKHT_BackEnd.PttkhtBackEndApplication",
+      "projectName": "PTTKHT_BackEnd",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
