@@ -16,7 +16,7 @@ public class CTDH implements Serializable {
     private CTDHPK id;
 
     @Column(name = "DonGia", nullable = false)
-    private Integer donGia;
+    private Float donGia;
 
     @Column(name = "SoLuong", nullable = false)
     private Integer soLuong;

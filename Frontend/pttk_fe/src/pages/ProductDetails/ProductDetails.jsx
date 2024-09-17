@@ -90,7 +90,7 @@ const ProductDetails = () => {
       <h3 style={{position:'absolute', top:'7rem',left:'1rem'}}><span className={styles.nav} onClick={() => {navigate('/product')}}>Quay lại</span> - Chi tiết sản phẩm</h3>
         <div className={styles.content}>
           <div className={styles.imgProduct}>
-            <img src={productDetail?.anhMinhHoa} alt="ảnh" />
+            <img style={{ maxWidth:'500px'}} src={productDetail?.anhMinhHoa} alt="ảnh" />
           </div>
           <div className={styles.detailProduct}>
               <h1 className={styles.textProduct}>{productDetail?.tenSP}</h1>

@@ -38,6 +38,8 @@ public class CTPNK implements Serializable{
     @Column(name = "ThanhTien", nullable = false)
     private Integer thanhTien;
 
+    @Column(name = "TrangThaiNhap", nullable = false)
+    private Integer trangThai;
     @Embeddable
     @Data
     public static class CTPNKPK implements Serializable {
