@@ -55,7 +55,8 @@ public class CTPNKServices implements ICTPNKServices{
         ctpnk.setDonGiaNhap(form.getDonGiaNhap());
         ctpnk.setSoLuong(form.getSoLuong());
         ctpnk.setThanhTien(form.getThanhTien());
-
+        ctpnk.setTrangThai(0);
+        
         // Tìm sản phẩm theo mã sản phẩm
         Optional<SanPham> optionalSanPham = sanPhamRepository.findById(form.getMaSP());
         if (optionalSanPham.isPresent()) {
