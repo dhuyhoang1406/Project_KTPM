@@ -33,8 +33,6 @@ const LoginAdmin = () => {
   
       localStorage.removeItem('id');
       localStorage.removeItem('Authorization');
-      localStorage.removeItem('Username');
-      localStorage.removeItem('Password');
   
       if (res.status === 200) {
         localStorage.setItem('Authorization', 'Basic ' + btoa(email + ':' + password));

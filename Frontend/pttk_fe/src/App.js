@@ -14,16 +14,13 @@ function App() {
     useEffect(()=> {
         const id = Number(localStorage.getItem('id')) || null
         if(id !== null) {
-            const username = localStorage.getItem('Username')
-            const password = localStorage.getItem('Password')
-            const data = {Username: username, Password: password}
-            handleGetDetailsUser(id,data)
+            handleGetDetailsUser(id)
         }
     },[])
 
-    const handleGetDetailsUser = async (id, data) => {
+    const handleGetDetailsUser = async (id) => {
         try {
-            const infoUser = await UserService.getDetailsUser(id, data)
+            const infoUser = await UserService.getDetailsUser(id)
             if (infoUser && infoUser.data) {
                 const {
                     hoTen = '',

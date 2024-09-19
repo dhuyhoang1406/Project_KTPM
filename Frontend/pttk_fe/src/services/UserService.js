@@ -7,7 +7,7 @@ export const loginUser = async (data) => {
     const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/auth/login/1`,
     {
         headers: {
-            "Authorization": "Basic " + btoa(data?.Username + ":" + data?.Password)
+            "Authorization": JWT
         }
     },)
     return res
@@ -32,10 +32,10 @@ export const signupUser = async (data) => {
 
 }
 
-export const getDetailsUser = async (id, data) => {
+export const getDetailsUser = async (id) => {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/TaiKhoan/${id}`,{
         headers: {
-            "Authorization": "Basic " + btoa(data?.Username + ":" + data?.Password)
+            "Authorization": JWT
         }
     },)
     return res
@@ -106,10 +106,10 @@ export const getAllUser = async (page,size,role,search) => {
     return res
 }
 
-export const changePassword = async (id,data, account) => {
+export const changePassword = async (id,data) => {
     const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/TaiKhoan/newPass/${id}`, data,{
         headers: {
-            "Authorization": "Basic " + btoa(account?.Username + ":" + account?.Password)
+            "Authorization": JWT
         }
     },)
     return res

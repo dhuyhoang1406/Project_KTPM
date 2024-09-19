@@ -64,8 +64,6 @@ const Profile = () => {
   };
 
   const handleChangeInfo = async () => {
-    const Username = localStorage.getItem("Username");
-    const Password = localStorage.getItem("Password");
     const id = localStorage.getItem("id");
     const hoTen = name.trim();
     const diaChi = address;
@@ -113,10 +111,7 @@ const Profile = () => {
       return;
     }
     if (hoTen && diaChi && gioiTinh && soDienThoai && ngaySinh) {
-      const res = await UserService.updateUser(id, formData, {
-        Username,
-        Password,
-      });
+      const res = await UserService.updateUser(id, formData);
     } else {
       message.warning("Vui lòng nhập đầy đủ thông tin !!!");
     }
@@ -124,8 +119,6 @@ const Profile = () => {
   
 
   const handleChangePassword = async () => {
-    const Username = localStorage.getItem("Username");
-    const Password = localStorage.getItem("Password");
     const id = Number(localStorage.getItem("id"));
     if (newPassword.length < 8) {
       message.warning("Mật khẩu phải dài tối thiểu 8 ký tự");
@@ -135,7 +128,6 @@ const Profile = () => {
         const res = await UserService.changePassword(
           id,
           { matKhau: newPassword },
-          { Username, Password }
         );
         message.success("Thay đổi mật khẩu thành công");
         localStorage.removeItem("id");

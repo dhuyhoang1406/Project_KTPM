@@ -43,12 +43,10 @@ const SignIn = () => {
             'Authorization',
             'Basic ' + btoa(email + ':' + password)
           );
-          localStorage.setItem('Username', email);
-          localStorage.setItem('Password', password);
           if (data?.maTK) {
             const id = data.maTK;
             localStorage.setItem('id', String(id));
-            const infoUser = await UserService.getDetailsUser(id, formData);
+            const infoUser = await UserService.getDetailsUser(id);
             if (infoUser?.data) {
               const {
                 hoTen = '',
