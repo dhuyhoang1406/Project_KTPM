@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import styles from './SignIn.module.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
-import FormLoginInput from '../../components/FormLoginInput/FormLoginInput';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../../redux/slides/userSlide';
-import * as UserService from '../../services/UserService';
-import * as message from '../../components/Message/Message';
+import React, { useState } from "react";
+import styles from "./SignIn.module.scss";
+import { useLocation, useNavigate } from "react-router-dom";
+import FormLoginInput from "../../components/FormLoginInput/FormLoginInput";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../redux/slides/userSlide";
+import * as UserService from "../../services/UserService";
+import * as message from "../../components/Message/Message";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const handleNavigateSignUp = () => {
-    navigate('/sign-up');
+    navigate("/sign-up");
   };
 
   const handleSubmit = async (event) => {
@@ -31,32 +31,32 @@ const SignIn = () => {
         const formData = { Username: email, Password: password };
         const response = await UserService.loginUser(formData);
         if (response.status === 200) {
-          await localStorage.removeItem('role')
+          await localStorage.removeItem("role");
           message.success();
           if (location?.state) {
             navigate(location?.state);
           } else {
-            navigate('/');
+            navigate("/");
           }
           const data = response?.data;
           localStorage.setItem(
-            'Authorization',
-            'Basic ' + btoa(email + ':' + password)
+            "Authorization",
+            "Basic " + btoa(email + ":" + password)
           );
           if (data?.maTK) {
             const id = data.maTK;
-            localStorage.setItem('id', String(id));
+            await localStorage.setItem("id", String(id));
             const infoUser = await UserService.getDetailsUser(id);
             if (infoUser?.data) {
               const {
-                hoTen = '',
-                email = '',
-                diaChi = '',
-                soDienThoai = '',
-                maTK = '',
-                vaiTro = '',
-                ngaySinh = '',
-                gioiTinh = '',
+                hoTen = "",
+                email = "",
+                diaChi = "",
+                soDienThoai = "",
+                maTK = "",
+                vaiTro = "",
+                ngaySinh = "",
+                gioiTinh = "",
               } = infoUser.data;
               dispatch(
                 updateUser({
@@ -74,14 +74,14 @@ const SignIn = () => {
           }
         }
       } catch (error) {
-
-          if (error.response.data.code === 1 && error.response.data.detailMessage === "Tài khoản của bị đã bị khóa !!"){
-            message.error("Tài khoản của bạn đã bị khóa !!!");
-
-          }else{
-            message.error("Email hoặc mật khẩu không đúng !!!");
-          }
-
+        if (
+          error.response.data.code === 1 &&
+          error.response.data.detailMessage === "Tài khoản của bị đã bị khóa !!"
+        ) {
+          message.error("Tài khoản của bạn đã bị khóa !!!");
+        } else {
+          message.error("Email hoặc mật khẩu không đúng !!!");
+        }
       }
     }
   };
@@ -91,18 +91,18 @@ const SignIn = () => {
 
     // Kiểm tra email
     if (!email) {
-      setEmailError('Vui lòng nhập email');
+      setEmailError("Vui lòng nhập email");
       isValid = false;
     } else {
-      setEmailError('');
+      setEmailError("");
     }
 
     // Kiểm tra password
     if (!password) {
-      setPasswordError('Vui lòng nhập mật khẩu');
+      setPasswordError("Vui lòng nhập mật khẩu");
       isValid = false;
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
 
     return isValid;
@@ -111,14 +111,14 @@ const SignIn = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     if (e.target.value) {
-      setEmailError('');
+      setEmailError("");
     }
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     if (e.target.value) {
-      setPasswordError('');
+      setPasswordError("");
     }
   };
 
@@ -149,8 +149,8 @@ const SignIn = () => {
             Đăng Nhập
           </button>
           <div className={styles.forgotPassword}>
-            <span style={{ color: '#333' }}>Bạn chưa có tài khoản?</span>
-            <span style={{ cursor: 'pointer' }} onClick={handleNavigateSignUp}>
+            <span style={{ color: "#333" }}>Bạn chưa có tài khoản?</span>
+            <span style={{ cursor: "pointer" }} onClick={handleNavigateSignUp}>
               Tạo tài khoản
             </span>
           </div>

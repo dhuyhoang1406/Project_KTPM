@@ -72,7 +72,7 @@ export const getDetailsOrder = async (id) => {
   return res
 }
 
-export const cancelOrder = async (idOrder) => {
+export const cancelOrder = async (idOrder,data) => {
   const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/DonHang/${idOrder}`, data, {
      //quyền
      headers: {
