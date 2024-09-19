@@ -2,21 +2,21 @@ import { success , error as errorMessage } from "../components/Message/Message"
 import { axiosJWT } from "./UserService"
 import axios from "axios"
 const JWT = localStorage.getItem("Authorization")
-export const createOrder = async (data,account) => {
+export const createOrder = async (data) => {
   const res = await axiosJWT.post(`${process.env.REACT_APP_API_URL}/DonHang`, data, {
      //quyền
      headers: {
-      "Authorization": "Basic " + btoa(account?.Username + ":" + account?.Password)
+      "Authorization": JWT
       }
   },)
   return res
 }
 
-export const getOrderByUserId = async (id,account) => {
+export const getOrderByUserId = async (id) => {
   const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/DonHang/donHangCuaToi/${id}?sort=ngayDat,desc`, {
      //quyền
      headers: {
-      "Authorization": "Basic " + btoa(account?.Username + ":" + account?.Password)
+      "Authorization": JWT
       }
   })
   return res.data
@@ -72,11 +72,11 @@ export const getDetailsOrder = async (id) => {
   return res
 }
 
-export const cancelOrder = async (idOrder, data, account) => {
+export const cancelOrder = async (idOrder) => {
   const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/DonHang/${idOrder}`, data, {
      //quyền
      headers: {
-      "Authorization": "Basic " + btoa(account?.Username + ":" + account?.Password)
+      "Authorization": JWT
       }
   })
   return res

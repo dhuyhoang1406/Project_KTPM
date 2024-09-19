@@ -27,12 +27,9 @@ const MyOrder = () => {
   }, []);
 
   const handleFetchdata = async () => {
-    const Username = localStorage.getItem("Username");
-    const Password = localStorage.getItem("Password");
     const id = localStorage.getItem("id");
-    const account = { Username, Password };
     try {
-      const res = await OrderService.getOrderByUserId(id, account);
+      const res = await OrderService.getOrderByUserId(id);
       setData(res.content);
     } catch (error) {
       console.error(error);
@@ -40,16 +37,11 @@ const MyOrder = () => {
   };
 
   const handleCancelOrder = async (id) => {
-    const Username = localStorage.getItem("Username");
-    const Password = localStorage.getItem("Password");
-    const account = { Username, Password };
     console.log(id);
-    console.log(account);
     try {
       const res = await OrderService.cancelOrder(
         id,
         { trangThai: "Huy" },
-        account
       );
       message.success("Hủy đơn hàng thành công!!");
       window.location.reload();

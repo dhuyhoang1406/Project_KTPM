@@ -44,15 +44,11 @@ const Payment = () => {
         danhSachCTDH.push({maSP:item.product , soLuong: item.amount, thanhGia: item.price * item.amount}); // Push each item to the array
     });
     console.log(danhSachCTDH)
-    const Username = localStorage.getItem("Username");
-    const Password = localStorage.getItem("Password");
     const data = {tongGiaTri, phuongThucThanhToan:payment, phuongThucVanChuyen:delivery , maKhachHang, diaChiGiaoHang: location.state.diaChi, danhSachCTDH} 
-    const account = {Username, Password}
     console.log(data)
     console.log(order?.orderItemsSelected);
     try {
-      console.log(account)
-      const res = await OrderService.createOrder(data,account)
+      const res = await OrderService.createOrder(data)
       console.log(res)
       message.success('Đặt hàng thành công')
       const arrayOrdered = []
