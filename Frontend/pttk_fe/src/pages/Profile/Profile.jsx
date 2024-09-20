@@ -9,7 +9,7 @@ import { message } from "antd";
 import * as UserService from "../../services/UserService";
 import InputNumberComponent from "../../components/InputComponent/InputNumberComponent";
 import { formatBirthDate} from "../../services/FeatureService";
-
+import { getDetailsUser } from "../../services/UserService";
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const [name, setName] = useState("");
@@ -75,42 +75,44 @@ const Profile = () => {
       message.warning("Tên chỉ được chứa chữ cái và khoảng trắng.");
       return;
     }
-    if (!ngaySinh) {
-      message.warning("Vui lòng nhập ngày sinh.");
-      return;
-    }
-    const birthDate = new Date(ngaySinh);
-    if (isNaN(birthDate.getTime())) {
-      message.warning("Ngày sinh không hợp lệ, vui lòng nhập lại.");
-      return;
-    }
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    if (age < 18) {
-      message.warning("Người dùng phải ít nhất 18 tuổi.");
-      return;
+    // if (!ngaySinh) {
+    //   message.warning("Vui lòng nhập ngày sinh.");
+    //   return;
+    // }
+    if(ngaySinh){
+      const birthDate = new Date(ngaySinh);
+      if (isNaN(birthDate.getTime())) {
+        message.warning("Ngày sinh không hợp lệ, vui lòng nhập lại.");
+        return;
+      }
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDifference = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDifference < 0 ||
+        (monthDifference === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      if (age < 18) {
+        message.warning("Người dùng phải ít nhất 18 tuổi.");
+        return;
+      }
     }
     const formData = {
       hoTen,
       diaChi,
       gioiTinh,
       soDienThoai,
-      ngaySinh: formatBirthDate(ngaySinh),
+      ngaySinh: ngaySinh ? formatBirthDate(ngaySinh): user.ngaySinh,
       trangThai: true,
       vaiTro: "User",
     };
-    if (!hoTen || !diaChi || !gioiTinh || !soDienThoai || !ngaySinh) {
+    if (!hoTen || !diaChi || !gioiTinh || !soDienThoai ) {
       message.warning("Vui lòng nhập đầy đủ thông tin !!!");
       return;
     }
-    if (hoTen && diaChi && gioiTinh && soDienThoai && ngaySinh) {
+    if (hoTen && diaChi && gioiTinh && soDienThoai ) {
       const res = await UserService.updateUser(id, formData);
     } else {
       message.warning("Vui lòng nhập đầy đủ thông tin !!!");
@@ -123,17 +125,17 @@ const Profile = () => {
     if (newPassword.length < 8) {
       message.warning("Mật khẩu phải dài tối thiểu 8 ký tự");
       return;
-    } else if (password === Password && newPassword === confirmPassword) {
+    } else if ( newPassword === confirmPassword) {
       try {
         const res = await UserService.changePassword(
           id,
-          { matKhau: newPassword },
+          { matKhau: newPassword,
+            matKhauCu: password
+          },
         );
         message.success("Thay đổi mật khẩu thành công");
         localStorage.removeItem("id");
         localStorage.removeItem("Authorization");
-        localStorage.removeItem("Username");
-        localStorage.removeItem("Password");
         navigate("/sign-in");
         // window.location.reload()
       } catch (error) {

@@ -11,5 +11,6 @@ public class TaiKhoanUpdatePassForm {
 
     @NotBlank(message = "Bạn không được để trống mật khẩu")
     private String matKhau;
-
+    @NotBlank(message = "Bạn không được để trống mật khẩu cũ")
+    private String matKhauCu;
 }

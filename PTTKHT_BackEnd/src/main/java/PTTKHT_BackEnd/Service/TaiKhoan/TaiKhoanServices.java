@@ -9,6 +9,10 @@ import PTTKHT_BackEnd.Form.TaiKhoan.TaiKhoanUpdateForm;
 import PTTKHT_BackEnd.Form.TaiKhoan.TaiKhoanUpdatePassForm;
 import PTTKHT_BackEnd.Repository.ITaiKhoanRepository;
 import PTTKHT_BackEnd.Specification.TaiKhoan.TaiKhoanSpecification;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -93,10 +97,20 @@ public class TaiKhoanServices implements ITaiKhoanServices{
     @Override
     @Transactional
     public void updateMatKhauTaiKhoan(Integer maTK, TaiKhoanUpdatePassForm form) {
-        TaiKhoan taiKhoan = repository.findById(maTK).get();
-        taiKhoan.setMatKhau( passwordEncoder.encode(form.getMatKhau())  );
-        repository.save(taiKhoan);
+        Optional<TaiKhoan> optionalTaiKhoan = repository.findById(maTK);
+        if (optionalTaiKhoan.isPresent()) {
+            TaiKhoan taiKhoan = optionalTaiKhoan.get();
+            if (passwordEncoder.matches(form.getMatKhauCu(), taiKhoan.getMatKhau())) {
+                taiKhoan.setMatKhau(passwordEncoder.encode(form.getMatKhau()));
+                repository.save(taiKhoan);  
+            } else {
+                throw new IllegalArgumentException("Mật khẩu cũ không đúng .");
+            }
+        } else {
+            throw new NoSuchElementException("Tài khoản với id: " + maTK + " không tìm thấy.");
+        }
     }
+
 
     @Override
     @Transactional
