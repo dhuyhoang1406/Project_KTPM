@@ -91,7 +91,7 @@ public class SanPhamServices implements ISanPhamServices{
             sanPham.setAnhMinhHoa(form.getAnhMinhHoa());
             sanPham.setLoaiSanPham(loaiSanPhamRepository.findById(form.getMaLoaiSanPham()).get());
             sanPham.setTrangThai(sanPhamCu.getTrangThai());
-            sanPham.setGia(form.getGia());
+            sanPham.setGia(sanPhamCu.getGia());
             SanPham oldSanPham = repository.findById(maSP).get();
             sanPham.setSoLuongConLai(oldSanPham.getSoLuongConLai());
             repository.save(sanPham);

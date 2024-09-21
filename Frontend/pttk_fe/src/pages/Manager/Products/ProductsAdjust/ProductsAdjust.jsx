@@ -86,7 +86,7 @@ const ProductsAdjust = ({ isCEO }) => {
           xuatXu: data.origin,
           theTich: data.volume,
           nongDoCon: data.concentration,
-          gia: data.price,
+          // gia: data.price,
           thuongHieu: data.label,
           anhMinhHoa: selectedImage,
           maLoaiSanPham: data.category.maLoaiSanPham,
@@ -274,30 +274,7 @@ const ProductsAdjust = ({ isCEO }) => {
               </div>
               {/* <span style={{marginLeft:"1rem",fontWeight:"700",color:"rgb(150, 150, 150)"}}>* Nồng Độ Cồn Không Quá 70% *</span> */}
               <div style={{ display: "flex", gap: "2rem" }}>
-                <div>
-                  <p className={styles.text}>Giá Tiền</p>
-                  {id ? (
-                    <span
-                      className={styles.input}
-                      style={{ width: "40rem", border: "none" }}
-                    >
-                      {data.price}
-                    </span>
-                  ) : (
-                    <>
-                      <input
-                        value={data.price}
-                        onChange={(event) =>
-                          setData({ ...data, price: event.target.value })
-                        }
-                        type="number"
-                        className={styles.input}
-                        placeholder="Giá Bán Sản Phẩm"
-                      />
-                    </>
-                  )}
-                
-                </div>
+
                 <div>
                   <p className={styles.text}>Xuất xứ</p>
                   <input
