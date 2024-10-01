@@ -6,3 +6,13 @@ export const convertPrice = (price) => {
         return null
     }
 }
+
+export const isValidPhoneNumber = (phoneNumber) => {
+    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
+
+    const isValidLength = cleanedPhoneNumber.length === 10;
+
+    const isValidPrefix = /^(0)(3|5|7|8|9)/.test(cleanedPhoneNumber);
+
+    return isValidLength && isValidPrefix;
+  };

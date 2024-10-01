@@ -8,6 +8,7 @@ import useDebounce from "../../../hooks/useDebounce";
 import { getAllUser ,updateUser,createUser } from "../../../services/UserService";
 import { formatBirthDate, formatDate } from "../../../services/FeatureService";
 import { error, success } from "../../../components/Message/Message";
+import { isValidBirthDate, isValidBirthdate, isValidPhoneNumber } from "../../../utils";
 const Customers = ()=>{
     const [page,setPage] = useState(1)
     const [flag,setFlag] = useState(false)
@@ -28,6 +29,17 @@ const Customers = ()=>{
       setFlag(!flag)
     }
     const valiDateAccount = (data) => {
+      const isAdult = (birthDate) => {
+        const today = new Date();
+        const birth = new Date(birthDate);
+        const age = today.getFullYear() - birth.getFullYear();
+        const monthDifference = today.getMonth() - birth.getMonth();
+        // Check if the birthday has not occurred this year
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
+          return age - 1 >= 18; // Must be 18 or older
+        }
+        return age >= 18; // Must be 18 or older
+      };
       if(data.hoTen === ""){
         return { status: "error", message: "Tên không được để trống" }
       }
@@ -37,20 +49,23 @@ const Customers = ()=>{
       if(!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(data.email) && id === ""){
         return { status: "error", message: "Email sai định dạng" }
       }
-      if(data.gender === ""){
+      if(data.gioiTinh === ""){
         return { status: "error", message: "Giới tính không được để trống" }
       }
       if(data.ngaySinh === ""){
         return { status: "error", message: "Ngày sinh không được để trống" }
       }
-      if(data.password === "" && id !== ""){
-        return { status: "error", message: "Mật Khẩu không được để trống" }
+      if (!isAdult(data.ngaySinh)) {
+        return { status: "error", message: "Người dùng phải từ 18 tuổi trở lên" }; 
+      }
+      if (id === "" && data.matKhau === "") { 
+        return { status: "error", message: "Mật Khẩu không được để trống" };
       }
       if(data.vaiTro === ""){
         return { status: "error", message: "Quyền không được để trống" }
       }
-      if(data.soDienThoai === ""){
-        return { status: "error", message: "Số điện thoại không được để trống" }
+      if(data.soDienThoai === "" || !isValidPhoneNumber(data.soDienThoai)){
+        return { status: "error", message: "Vui lòng nhập số điện thoại hợp lệ" }
       }
       if(data.diaChi === ""){
         return { status: "error", message: "Địa chỉ không được để trống" }

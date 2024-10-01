@@ -3,6 +3,7 @@ import styles from "./SuppliersAdjust.module.scss"
 import { useNavigate, useParams } from "react-router-dom";
 import { createSupplier, getSupplier, updateSupplier } from "../../../../services/SupplierService";
 import { error } from "../../../../components/Message/Message";
+import { isValidPhoneNumber } from "../../../../utils";
 const SuppliersAdjust = ({isCEO})=>{
     const { id } = useParams()
     const [name,setName] = useState("")
@@ -30,19 +31,24 @@ const SuppliersAdjust = ({isCEO})=>{
                 <div>
                     <button style={{fontFamily:"Arial",fontSize:"1.5rem",fontWeight:"700",border:"1px solid rgb(140,140,140)",backgroundColor:"white",color:"rgb(80,80,80)",padding:"1rem 2rem 1rem 2rem",borderRadius:"0.6rem",cursor:"pointer"}} onClick={()=>{isCEO !== "CEO" ? navigate("/system/manager/supplier") : navigate("/system/ceo/supplier")}}>Hủy</button>
                     <button style={{marginLeft:"1rem",fontFamily:"Arial",fontSize:"1.5rem",fontWeight:"700",color:"white",backgroundColor:"rgb(65, 64, 64)",padding:"1rem 2rem 1rem 2rem",borderRadius:"0.6rem",cursor:"pointer"}} onClick={async()=>{
-                        if(name&&email&&phone){
-                            if(/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)){
-                                if(id){
-                                    await updateSupplier(id,name,phone,email)
-                                }else{
-                                    await createSupplier(name,phone,email)
+                       if (name && email && phone) {
+                        if (/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
+                            if (isValidPhoneNumber(phone)) {
+                                if (id) {
+                                    await updateSupplier(id, name, phone, email);
+                                } else {
+                                    await createSupplier(name, phone, email);
                                 }
-                            }else{
-                                error("Sai định dạng email")
+                            } else {
+                                error("Vui lòng nhập số điện thoại hợp lệ");
                             }
-                        }else{
-                            error("Thông tin không được để trống")
+                        } else {
+                            error("Sai định dạng email"); 
                         }
+                    } else {
+                        error("Thông tin không được để trống");
+                    }
+                    
                     }}>Lưu</button>
                 </div>
             </div>

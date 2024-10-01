@@ -4,7 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import Select from "../../../../components/Select/Select";
-import { getAllCategories } from "../../../../services/CategoriesService";
+import {
+  getAllCategories,
+  getAllCategoriesWithOutPageable,
+} from "../../../../services/CategoriesService";
 import {
   createProduct,
   getDetailsProduct,
@@ -16,6 +19,7 @@ const ProductsAdjust = ({ isCEO }) => {
   const { id } = useParams();
   const imageRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [data, setData] = useState({
     name: "",
     concentration: "",
@@ -28,10 +32,33 @@ const ProductsAdjust = ({ isCEO }) => {
       tenLoaiSanPham: "",
     },
   });
-  const handleCategory = (category) => {
-    setData({ ...data, category: category });
+  const handleCategoryChange = (event) => {
+    const selectedValue = parseInt(event.target.value, 10); // Chuyển đổi sang số
+    const selectedCategory = categories.find(
+      (cat) => cat.maLoaiSanPham === selectedValue
+    );
+    console.log("Selected Value:", selectedValue);
+    console.log("Selected Category:", selectedCategory);
+    setData({
+      ...data,
+      category: selectedCategory || { maLoaiSanPham: "", tenLoaiSanPham: "" },
+    });
   };
+
   const validProduct = () => {
+    if (
+      data.name === "" ||
+      data.volume === "" ||
+      data.concentration === "" ||
+      data.price === "" ||
+      data.origin === "" ||
+      data.label === "" ||
+      data.category.maLoaiSanPham === "" ||
+      data.category.tenLoaiSanPham === ""
+    ) {
+      error("Vui lòng không để trống bất kì trường nào");
+      return false;
+    }
     if (!selectedImage) {
       return false;
     }
@@ -78,7 +105,6 @@ const ProductsAdjust = ({ isCEO }) => {
   };
 
   const handleSubmit = async () => {
-    
     if (validProduct(data)) {
       if (id) {
         await updateProduct(id, {
@@ -104,7 +130,7 @@ const ProductsAdjust = ({ isCEO }) => {
         });
       }
     } else {
-      error("Các thông tin sản phẩm không được để trống");
+      // error("Các thông tin sản phẩm không được để trống");
     }
   };
   const handleImage = (event) => {
@@ -137,6 +163,13 @@ const ProductsAdjust = ({ isCEO }) => {
         });
       });
     }
+    getAllCategoriesWithOutPageable()
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+      });
   }, []);
   return (
     <div className={styles.wrapper}>
@@ -264,17 +297,29 @@ const ProductsAdjust = ({ isCEO }) => {
                 </div>
                 <div>
                   <p className={styles.text}>Loại Sản Phẩm</p>
-                  <Select
-                    category={data.category}
-                    setCategory={handleCategory}
-                    api={getAllCategories}
-                    placeholder={"Loại Sản Phẩm"}
-                  />
+                  <select
+                    value={data.category.maLoaiSanPham}
+                    onChange={handleCategoryChange}
+                    style={{
+                      height: "3rem",
+                      padding: "0.3rem",
+                      width: "40rem",
+                    }}
+                  >
+                    <option value="">Mặc định</option>
+                    {categories.map((category) => (
+                      <option
+                        value={category.maLoaiSanPham}
+                        key={category.maLoaiSanPham}
+                      >
+                        {category.tenLoaiSanPham}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
               {/* <span style={{marginLeft:"1rem",fontWeight:"700",color:"rgb(150, 150, 150)"}}>* Nồng Độ Cồn Không Quá 70% *</span> */}
               <div style={{ display: "flex", gap: "2rem" }}>
-
                 <div>
                   <p className={styles.text}>Xuất xứ</p>
                   <input

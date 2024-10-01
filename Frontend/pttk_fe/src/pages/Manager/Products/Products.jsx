@@ -28,7 +28,7 @@ const Products = ({ isCEO }) => {
     setChange(!change);
   };
   const handleReset = () => {
-    setSearch("");
+    setSearch("")
     setConcentration("0");
     setVolume("0");
     setPrice("0");
@@ -158,6 +158,7 @@ const Products = ({ isCEO }) => {
         <div style={{ position: "relative" }}>
           <FontAwesomeIcon className={styles.icon} icon={faSearch} />
           <input
+            value={search}
             className={styles.input}
             style={{ width: "30rem" }}
             onChange={(event) => setSearch(event.target.value)}

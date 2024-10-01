@@ -272,6 +272,7 @@ const OrderPage = () => {
                             />
                           </button>
                           <WrapperInputNumber
+                            type="number"
                             defaultValue={order?.amount}
                             value={order?.amount}
                             size="small"

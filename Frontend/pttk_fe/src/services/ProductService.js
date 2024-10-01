@@ -41,7 +41,7 @@ export const createProduct = async (data) => {
         })
         success("Tạo thành công")
     } catch (error) {
-        errorMessage(`Tạo thất bại :${error.response.data.detailMessage}`)
+        errorMessage(`Tạo thất bại`)
     }
 
 }

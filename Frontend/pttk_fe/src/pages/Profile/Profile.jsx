@@ -9,7 +9,7 @@ import { message } from "antd";
 import * as UserService from "../../services/UserService";
 import InputNumberComponent from "../../components/InputComponent/InputNumberComponent";
 import { formatBirthDate} from "../../services/FeatureService";
-import { getDetailsUser } from "../../services/UserService";
+import { isValidPhoneNumber } from "../../utils";
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const [name, setName] = useState("");
@@ -75,10 +75,12 @@ const Profile = () => {
       message.warning("Tên chỉ được chứa chữ cái và khoảng trắng.");
       return;
     }
-    // if (!ngaySinh) {
-    //   message.warning("Vui lòng nhập ngày sinh.");
-    //   return;
-    // }
+
+    if(!isValidPhoneNumber(soDienThoai)) {
+      message.warning("Vui lòng nhập đúng số điện thoại !")
+      return;
+    }
+    
     if(ngaySinh){
       const birthDate = new Date(ngaySinh);
       if (isNaN(birthDate.getTime())) {
@@ -114,6 +116,9 @@ const Profile = () => {
     }
     if (hoTen && diaChi && gioiTinh && soDienThoai ) {
       const res = await UserService.updateUser(id, formData);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } else {
       message.warning("Vui lòng nhập đầy đủ thông tin !!!");
     }
