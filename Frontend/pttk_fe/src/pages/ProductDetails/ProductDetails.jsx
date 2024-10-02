@@ -54,24 +54,29 @@ const ProductDetails = () => {
   };
 
   const handleInputChange = (e) => {
-    console.log(213)
-    if(e.target.value > productDetail?.soLuongConLai){
-      setCount(productDetail?.soLuongConLai)
-    }else {
-      setCount(e.target.value);
+    const value = e.target.value;
+  
+    if (!isNaN(value) && Number(value) >= 0) {
+      const numericValue = Number(value);
+  
+      if (numericValue > productDetail?.soLuongConLai) {
+        setCount(productDetail?.soLuongConLai);
+      } else {
+        setCount(numericValue);
+      }
     }
   };
 
 
   const handleAddOrderProduct = () => {
     if(!user?.maTK) {
-      //đăng nhập xong là quay lại trang trước
         navigate('/sign-in', {state: location?.pathname})
     }else if(productDetail?.soLuongConLai === 0){
       message.error('Sản phẩm này đã hết hàng!')
+    }else if(count === 0){
+      message.warning('Vui lòng nhập số lượng lớn hơn 0!')
     }else {
       message.success('Đã thêm vào giỏ hàng')
-
       dispatch(addOrderProduct({
         orderItem: {
             name: productDetail?.tenSP,
@@ -82,6 +87,7 @@ const ProductDetails = () => {
             countInstock: productDetail?.soLuongConLai
         }
     }))
+    navigate('/order')
     }
 }
 
@@ -132,7 +138,7 @@ const ProductDetails = () => {
                 <Button onClick={() => {
                     if(user.maTK !== ''){
                       handleAddOrderProduct(); 
-                    productDetail.soLuongConLai !== 0 && navigate('/order')
+                    // productDetail.soLuongConLai !== 0 && navigate('/order')
                     }else {
                       navigate('/sign-in')
                     }

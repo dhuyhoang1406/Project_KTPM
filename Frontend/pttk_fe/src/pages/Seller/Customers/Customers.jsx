@@ -8,7 +8,7 @@ import useDebounce from "../../../hooks/useDebounce";
 import { getAllUser ,updateUser,createUser } from "../../../services/UserService";
 import { formatBirthDate, formatDate } from "../../../services/FeatureService";
 import { error, success } from "../../../components/Message/Message";
-import { isValidBirthDate, isValidBirthdate, isValidPhoneNumber } from "../../../utils";
+import { isValidBirthDate, isValidBirthdate, isValidPhoneNumber, validatePassword } from "../../../utils";
 const Customers = ()=>{
     const [page,setPage] = useState(1)
     const [flag,setFlag] = useState(false)
@@ -60,6 +60,9 @@ const Customers = ()=>{
       }
       if (id === "" && data.matKhau === "") { 
         return { status: "error", message: "Mật Khẩu không được để trống" };
+      }
+      if (data.matKhau.length < 8) {
+        return { status: "error", message: "Vui lòng đăng ký mật khẩu theo yêu cầu bên dưới"};
       }
       if(data.vaiTro === ""){
         return { status: "error", message: "Quyền không được để trống" }
@@ -222,8 +225,8 @@ const Customers = ()=>{
                   <div>
                     <ul className={styles.ul}>
                       <li className={styles.text} style={{fontSize:"1.3rem"}}>Mật khẩu phải có ít nhất 8 ký tự</li>
-                      <li className={styles.text} style={{fontSize:"1.3rem"}}>Mật khẩu phải có ít nhất 1 ký tự viết hoa</li>
-                      <li className={styles.text} style={{fontSize:"1.3rem"}}>Mật khẩu phải có ít nhất 3 chữ số</li>
+                      {/* <li className={styles.text} style={{fontSize:"1.3rem"}}>Mật khẩu phải có ít nhất 1 ký tự viết hoa</li> */}
+                      {/* <li className={styles.text} style={{fontSize:"1.3rem"}}>Mật khẩu phải có ít nhất 3 chữ số</li> */}
                     </ul>
                   </div>
                 }

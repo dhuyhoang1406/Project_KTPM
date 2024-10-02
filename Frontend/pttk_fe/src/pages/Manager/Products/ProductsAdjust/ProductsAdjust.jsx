@@ -50,7 +50,6 @@ const ProductsAdjust = ({ isCEO }) => {
       data.name === "" ||
       data.volume === "" ||
       data.concentration === "" ||
-      data.price === "" ||
       data.origin === "" ||
       data.label === "" ||
       data.category.maLoaiSanPham === "" ||
@@ -105,6 +104,7 @@ const ProductsAdjust = ({ isCEO }) => {
   };
 
   const handleSubmit = async () => {
+    console.log(data)
     if (validProduct(data)) {
       if (id) {
         await updateProduct(id, {

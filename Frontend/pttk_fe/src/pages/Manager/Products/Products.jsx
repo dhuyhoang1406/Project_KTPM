@@ -35,6 +35,10 @@ const Products = ({ isCEO }) => {
     setChooseCategory("");
     setPage(1);
     setChange(!change);
+    document.getElementById("concentration-select").value = "0";
+    document.getElementById("volume-select").value = "0";
+    document.getElementById("price-select").value = "0";
+    document.getElementById("category-select").value = "";
   };
 
   useEffect(() => {
@@ -166,6 +170,7 @@ const Products = ({ isCEO }) => {
           />
         </div>
         <select
+          id="concentration-select"
           onChange={(event) => setConcentration(event.target.value)}
           style={{ height: "3rem", padding: "0.3rem" }}
         >
@@ -176,6 +181,7 @@ const Products = ({ isCEO }) => {
           <option value={4}>Trên 60%</option>
         </select>
         <select
+          id="volume-select"
           onChange={(event) => setVolume(event.target.value)}
           style={{ height: "3rem", padding: "0.3rem" }}
         >
@@ -186,6 +192,7 @@ const Products = ({ isCEO }) => {
           <option value={4}>Trên 1L</option>
         </select>
         <select
+          id="price-select"
           onChange={(event) => setPrice(event.target.value)}
           style={{ height: "3rem", padding: "0.3rem" }}
         >
@@ -196,6 +203,7 @@ const Products = ({ isCEO }) => {
           <option value={4}>Trên 3tr</option>
         </select>
         <select
+          id="category-select"
           onChange={(event) => setChooseCategory(event.target.value)}
           style={{ height: "3rem", padding: "0.3rem" }}
         >
