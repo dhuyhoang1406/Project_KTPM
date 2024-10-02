@@ -61,7 +61,7 @@ const Customers = ()=>{
       if (id === "" && data.matKhau === "") { 
         return { status: "error", message: "Mật Khẩu không được để trống" };
       }
-      if (data.matKhau.length < 8) {
+      if (data.matKhau.length < 8 && id==='') {
         return { status: "error", message: "Vui lòng đăng ký mật khẩu theo yêu cầu bên dưới"};
       }
       if(data.vaiTro === ""){

@@ -1,3 +1,4 @@
 {
-  "java.project.sourcePaths": ["Frontend/pttk_fe"]
+  "java.project.sourcePaths": ["Frontend/pttk_fe"],
+  "java.compile.nullAnalysis.mode": "disabled"
 }
