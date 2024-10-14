@@ -23,7 +23,7 @@ public class SanPhamCreateForm {
 
     @NotNull(message = "Không được để trống nồng độ cồn !!")
     @DecimalMin(value = "0.0", message = "Nồng độ cồn phải lớn hơn hoặc bằng 0 !!")
-    @DecimalMax(value = "100.0", message = "Nồng độ cồn phải nhỏ hơn hoặc bằng 100 !!")
+    @DecimalMax(value = "70.0", message = "Nồng độ cồn phải nhỏ hơn hoặc bằng 70 !!")
     private Float nongDoCon;
 
     // @Positive(message = "Giá phải là số dương !!")
