@@ -61,12 +61,24 @@ const ProductsAdjust = ({ isCEO }) => {
     if (!selectedImage) {
       return false;
     }
-    const namePattern = /^[^\s][\p{L}\s]+$/u;
-    if (!namePattern.test(data.origin)) {
+    const regex = /^[\s\d\W]/;
+    if (regex.test(data.name)) {
       error(
-        "Xuất xứ chỉ được chứa chữ cái và không bắt đầu bằng khoảng trắng!"
+        "Tên sản phẩm không được bắt đầu với khoảng trắng, kí tự đặc biệt, chỉ là số"
       );
-      return;
+      return false;
+    }
+    if (regex.test(data.origin)) {
+      error(
+        "Tên xuất xứ không được bắt đầu với khoảng trắng, kí tự đặc biệt, chỉ là số"
+      );
+      return false;
+    }
+    if (regex.test(data.label)) {
+      error(
+        "Tên thương hiệu không được bắt đầu với khoảng trắng, kí tự đặc biệt, chỉ là số"
+      );
+      return false;
     }
     if (data.concentration > 70) {
       error("Nồng độ cồn không vượt quá 70%!");
@@ -104,7 +116,7 @@ const ProductsAdjust = ({ isCEO }) => {
   };
 
   const handleSubmit = async () => {
-    console.log(data)
+    console.log(data);
     if (validProduct(data)) {
       if (id) {
         await updateProduct(id, {
