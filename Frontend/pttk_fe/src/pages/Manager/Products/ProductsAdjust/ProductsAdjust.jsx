@@ -59,6 +59,7 @@ const ProductsAdjust = ({ isCEO }) => {
       return false;
     }
     if (!selectedImage) {
+      error("Vui lòng chọn ảnh sản phẩm");
       return false;
     }
     const regex = /^[\s\d\W]/;
@@ -79,6 +80,38 @@ const ProductsAdjust = ({ isCEO }) => {
         "Tên thương hiệu không được bắt đầu với khoảng trắng, kí tự đặc biệt, chỉ là số"
       );
       return false;
+    }
+    const specialCharRegex = /[^\p{L}\p{N}\s]/u;
+    if (data.name.startsWith(" ") || specialCharRegex.test(data.name)) {
+      error(
+        "Tên sản phẩm chỉ được chứa chữ cái và số và không bắt đầu bằng khoảng trắng!"
+      );
+      return;
+    }
+    const onlyNumbersRegex = /^\d+$/;
+    if (onlyNumbersRegex.test(data.name)) {
+      error("Tên sản phẩm không được chỉ chứa số!");
+      return;
+    }
+    if (data.label.startsWith(" ") || specialCharRegex.test(data.label)) {
+      error(
+        "Thương hiệu chỉ được chứa chữ cái và số và không bắt đầu bằng khoảng trắng!"
+      );
+      return;
+    }
+    if (onlyNumbersRegex.test(data.label)) {
+      error("Thương hiệu không được chỉ chứa số!");
+      return;
+    }
+    if (data.origin.startsWith(" ") || specialCharRegex.test(data.origin)) {
+      error(
+        "Xuất xứ chỉ được chứa chữ cái và số và không bắt đầu bằng khoảng trắng!"
+      );
+      return;
+    }
+    if (onlyNumbersRegex.test(data.origin)) {
+      error("Xuất xứ không được chỉ chứa số!");
+      return;
     }
     if (data.concentration > 70) {
       error("Nồng độ cồn không vượt quá 70%!");
@@ -116,7 +149,6 @@ const ProductsAdjust = ({ isCEO }) => {
   };
 
   const handleSubmit = async () => {
-    console.log(data);
     if (validProduct(data)) {
       if (id) {
         await updateProduct(id, {
